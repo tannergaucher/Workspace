@@ -2,24 +2,33 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const Item = mongoose.model('Item');
-const uuid = require('uuid');
+// const uuid = require('uuid');
 
+//add item
 exports.addItem = async (req, res) => {
   const item = await (new Item(req.body)).save();
-  console.log('added')
-  res.send(`Added item ${item}`)
+  console.log('added' + item)
 }
 
-exports.test =  (req, res) => {
-  res.send('Works')
+//deleteItem
+exports.deleteItem = async (req, res) => {
+  const item = await Item.findOne({ id: _req.params.id });
+  console.log('deleteItem findOne' , item)
+  
 }
 
-exports.testPost = (req, res) => {
-  res.send('Test POST')
+//updateItem
+exports.updateItem = async (req, res) => {
+  const item = await Item.findOneAndUpdate({ _id: req.params.id}, req.body, {
+    new: true,
+    runValidators: true
+  }).exec();
 }
 
-exports.getItems = (req, res) => {
-  //get items from db
-  // items => res.json
+//getItems
+exports.getItems = async (req, res) => {
+  const itemsPromise = Item.find()
+  const countPromise = Item.count()
+  const [items, count] = await Promise.all([itemsPromise, countPromise]);
+  console.log("items", items, "count", count);
 }
-

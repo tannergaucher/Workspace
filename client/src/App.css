@@ -1,6 +1,36 @@
-#item-input-form {
-  padding: 3rem;
-  border: 1px solid black;
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  margin-top: 10px;
+}
+
+input {
+  margin-right: 10px;
+}
+
+.item {
+  border: .5px solid rgba(0, 0, 0, .1);
+  margin-top: 20px;
+  padding: 10px 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline; 
+}
+
+.edit-delete-btns {
   display: flex;
   flex-direction: column;
 }

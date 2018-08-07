@@ -11,6 +11,9 @@ const itemSchema = new mongoose.Schema ({
   },
   rating: {
     type: Number
+  },
+  id: {
+    type: String
   }
 });
 

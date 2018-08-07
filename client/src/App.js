@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import ItemForm from './components/ItemForm';
-import Item from './components/Item'
+import Item from './components/Item';
 import sampleItems from './sample-items';
 
-class App extends Component {
+import axios from 'axios';
+
+class App extends React.Component {
   
   state = {
     items: {},
@@ -14,19 +16,12 @@ class App extends Component {
   }
   
   componentDidMount() {
-    //call api, load items from DB
   }
   
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value})
   }
     
-  loadItemsFromDb = () => {
-    //call api 
-    //GET items from db
-    //set state as items
-  }
-  
   addItem = item => {
     const items = {...this.state.items}
     items[`item${Date.now()}`] = item;
@@ -41,7 +36,7 @@ class App extends Component {
     })
   }
   
-  deleteItemFromState = key => {
+  deleteItem = key => {
     console.log('delete item')
     const items = {...this.state.items}
     items[key] = null;
@@ -56,6 +51,22 @@ class App extends Component {
   
   loadSampleItems = () => {
     this.setState({ items: sampleItems })
+  }
+  
+  getItemsFromMongo = () => {
+    
+    axios.get('/getItems')
+    .then((result) => {
+      console.log('client get')
+      console.log("result", result.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .then(() => {
+      console.log('executed');
+    })
+    
   }
   
   render() {
@@ -75,7 +86,7 @@ class App extends Component {
             key={key}
             index={key}
             details={this.state.items[key]}
-            deleteItemFromState={this.deleteItemFromState}
+            deleteItem={this.deleteItem}
             handleChange={this.handleChange}
             nameInput={this.state.nameInput}
             priceInput={this.state.priceInput}
@@ -84,6 +95,9 @@ class App extends Component {
             updateItem={this.updateItem}
           />
         ))}
+        <button
+          onClick={this.getItemsFromMongo}
+          >Load Sample Items</button>
       </div>
     )
   }

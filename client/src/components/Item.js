@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class Item extends React.Component {
   
@@ -22,16 +23,32 @@ class Item extends React.Component {
   }
   
   handleChange = e => {
-    const updatedItem = {
-      ...this.props.item,
-      [e.currentTarget.name]: e.currentTarget.value
-    };
+    const updatedItem = { 
+      ...this.props.item, 
+      [e.currentTarget.name]: e.currentTarget.value};
+      
     this.props.updateItem(this.props.index, updatedItem)
   }
   
   handleSaveChangesClick = () => {
     this.props.updateItem(this.props.index, this.props.item);
     this.toggleEditForm();
+    
+    console.log('handlesaveChanges')
+    
+                              //req.params.id 
+    axios.post(`/updateItem/${this.props.details.id}`, {
+      name: this.props.details.name,
+      price: this.props.details.price,
+      rating: this.props.details.rating
+    })
+  }
+  
+  handleDeleteClick = () => {
+    this.props.deleteItem(this.props.index)
+    
+                              //req.params.id
+    axios.post(`/deleteItem/${this.props.details.id}`)
   }
   
    
@@ -46,7 +63,7 @@ class Item extends React.Component {
           <p>Price: {this.props.details.price}</p>
           <p>Rating: {this.props.details.rating}</p>
           <div className="edit-delete-btns">
-            <button onClick={() => this.props.deleteItemFromState(this.props.index)}>X</button>
+            <button onClick={this.handleDeleteClick}>X</button>
             <button onClick={this.handleClick}>Edit</button>
           </div>
 

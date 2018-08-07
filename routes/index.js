@@ -9,9 +9,9 @@ router.post('/addItem', itemController.addItem)
 router.get('/getItems', itemController.getItems)
 
 // @UPDATE ITEM
-router.post('/udpateItem', itemController.updateItem)
+router.post('/updateItem/:id', itemController.updateItem)
 
 // @DELETE ITEM
-router.post('/deleteItem', itemController.deleteItem)
+router.post('/deleteItem/:id', itemController.deleteItem)
 
 module.exports = router;

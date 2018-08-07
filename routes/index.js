@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const itemController = require('../controllers/itemController')
 
 // @ADD ITEM
@@ -14,4 +14,4 @@ router.post('/updateItem/:id', itemController.updateItem)
 // @DELETE ITEM
 router.post('/deleteItem/:id', itemController.deleteItem)
 
-module.exports = router;
+module.exports = router

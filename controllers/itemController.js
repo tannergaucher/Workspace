@@ -1,21 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 mongoose.Promise = global.Promise;
 
 const Item = mongoose.model('Item');
 
-//add item
+//@ add item
 exports.addItem = async (req, res) => {
-  console.log('itemcontroller add item')
-  // req.body.author = req.user._id;
   const item = await (new Item(req.body)).save();
   console.log('added' + item)
 }
 
 //deleteItem
 exports.deleteItem = async (req, res) => {
-  console.log("item controller req.params.id", req.params.id)
   const item = await Item.findOne({ id: req.params.id }).remove();
-  console.log('deleteItem findOne' , item)
+  console.log('deleted item' , item)
 }
 
 //updateItem

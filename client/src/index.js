@@ -1,6 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import ItemForm from './components/ItemForm'
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Switch>
+      <Route path="/additem" component={ItemForm} />
+      <Route exact path="/" component={App} />
+    </Switch>
+  </BrowserRouter>,
+  document.getElementById('root')
+)

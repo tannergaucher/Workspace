@@ -64,9 +64,21 @@ class Item extends React.Component {
           </div>
 
           <div className={this.state.edit === false ? 'hide' : 'show'}>
-            <input name="name" onChange={this.handleChange} value={this.props.details.name} />
-            <input name="price" onChange={this.handleChange} value={this.props.details.price} />
-            <input name="rating" onChange={this.handleChange} value={this.props.details.rating} />
+            <input
+              name="name"
+              onChange={this.handleChange}
+              value={this.props.details.name}
+            />
+            <input
+              name="price"
+              onChange={this.handleChange}
+              value={this.props.details.price}
+            />
+            <input
+              name="rating"
+              onChange={this.handleChange}
+              value={this.props.details.rating}
+            />
             <button onClick={this.handleSaveChangesClick}>Save Changes</button>
           </div>
         </div>

@@ -8,6 +8,9 @@ router.post('/addItem', itemController.addItem)
 // @GET ITEMS
 router.get('/getItems', itemController.getItems)
 
+// @GETITEM
+router.get('/getItem', itemController.getItem)
+
 // @UPDATE ITEM
 router.post('/updateItem/:id', itemController.updateItem)
 

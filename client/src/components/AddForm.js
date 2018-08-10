@@ -1,8 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import uuidv1 from 'uuid/v1'
+
 import TextField from './TextField'
 import Button from './Button'
 
+import { createWorkspace } from '../actions'
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -17,29 +22,52 @@ const FormTitle = styled.h3`
 `
 
 class AddForm extends React.Component {
-  state = {
-    space: {}
-  }
+  renderField = field => (
+    <TextField {...field.input} placeholder={field.label} />
+  )
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleSubmit = e => {
-    console.log('new space', this.state.name)
+  onSubmit = values => {
+    this.props.createWorkspace(values, () => this.props.history.push('/'))
   }
 
   render() {
+    const { handleSubmit } = this.props
     return (
-      <FormWrapper>
+      <FormWrapper onSubmit={handleSubmit(this.onSubmit)}>
         <FormTitle>Add new space</FormTitle>
-        <TextField placeholder="name" name="name" />
-        <TextField placeholder="location" name="location" />
-        <TextField placeholder="rating" name="rating" />
-        <TextField placeholder="photo" name="photo" />
-        <Button>Save</Button>
+        <Field name="name" label="Name" component={this.renderField} />
+        <Field name="location" label="Location" component={this.renderField} />
+        <Field name="rating" label="Rating" component={this.renderField} />
+        <Field name="picture" label="Picture" component={this.renderField} />
+        <Button type="submit">Save</Button>
       </FormWrapper>
     )
   }
 }
-export default AddForm
+
+function validate(values) {
+  const errors = {}
+
+  if (!values.name) {
+    errors.name = 'enter a name!'
+  }
+
+  if (!values.location) {
+    errors.name = 'enter a location!'
+  }
+  if (!values.rating) {
+    errors.name = 'enter a location!'
+  }
+
+  return errors
+}
+
+export default reduxForm({
+  validate,
+  form: 'AddWorkspaceForm'
+})(
+  connect(
+    null,
+    { createWorkspace }
+  )(AddForm)
+)

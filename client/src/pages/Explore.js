@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
 import Navbar from '../components/Navbar'
 import GoogleMap from '../components/GoogleMap'
+import SpaceCard from '../components/Card'
 
 const Container = styled.div`
   display: flex;
@@ -11,23 +13,37 @@ const Container = styled.div`
 const CardsWrapper = styled.div`
   flex: 2;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 `
 const MapWrapper = styled.div`
   flex: 1;
 `
 
-const Explore = () => (
-  <div>
-    <Navbar />
-    <Container>
-      <CardsWrapper>Cards here</CardsWrapper>
-      <MapWrapper>
-        <GoogleMap />
-      </MapWrapper>
-    </Container>
-  </div>
-)
+class Explore extends React.Component {
+  render() {
+    const { workspaces } = this.props
+    return (
+      <div>
+        <Navbar />
+        <Container>
+          <CardsWrapper>
+            <ul>
+              {Object.keys(workspaces).map(key => (
+                <SpaceCard key={key} details={workspaces[key]} />
+              ))}
+            </ul>
+          </CardsWrapper>
+          <MapWrapper>
+            <GoogleMap />
+          </MapWrapper>
+        </Container>
+      </div>
+    )
+  }
+}
 
-export default Explore
+function mapStateToProps(state) {
+  return { workspaces: state.workspaces }
+}
+
+export default connect(mapStateToProps)(Explore)

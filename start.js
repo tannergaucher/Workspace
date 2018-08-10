@@ -23,7 +23,7 @@ mongoose.connection.on('disconnected', function() {
 })
 
 //import all models
-require('./models/Item')
+require('./models/Workspace')
 
 const app = require('./app')
 

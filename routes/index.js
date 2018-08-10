@@ -1,20 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const itemController = require('../controllers/itemController')
+const workspaceController = require('../controllers/workspaceController')
 
-// @ADD ITEM
-router.post('/addItem', itemController.addItem)
+// @ADD WORKSPACE
+router.post('/addWorkspace', workspaceController.addWorkspace)
 
-// @GET ITEMS
-router.get('/getItems', itemController.getItems)
+// @GET WORKSPACES
+router.get('/getWorkspaces', workspaceController.getWorkspaces)
 
-// @GETITEM
-router.get('/getItem', itemController.getItem)
+// @GET WORKSPACE
+router.get('/getWorkspace/:id', workspaceController.getWorkspace)
 
-// @UPDATE ITEM
-router.post('/updateItem/:id', itemController.updateItem)
+// @UPDATE WORKSPACE
+router.post('/updateWorkspace/:id', workspaceController.updateWorkspace)
 
-// @DELETE ITEM
-router.post('/deleteItem/:id', itemController.deleteItem)
+// @DELETE WORKSPACE
+router.post('/deleteWorkspace/:id', workspaceController.deleteWorkspace)
 
 module.exports = router

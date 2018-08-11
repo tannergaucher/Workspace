@@ -3,16 +3,18 @@ import ReactDOM from 'react-dom'
 import registerServiceWorker from './registerServiceWorker'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import promise from 'redux-promise'
+import thunk from 'redux-thunk'
+// import promise from 'redux-promise'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { ThemeProvider, injectGlobal } from 'styled-components'
 
-import reducers from './reducers'
+import rootReducer from './reducers'
 
 import Index from './pages/Index'
 import Add from './pages/Add'
 import Explore from './pages/Explore'
-import Login from './pages/Login'
+import ShowSpace from './pages/ShowSpace'
+import About from './pages/About'
 
 injectGlobal`
   body {
@@ -36,15 +38,16 @@ const theme = {
   }
 }
 
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore)
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStoreWithMiddleware(rootReducer)}>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/about" component={About} />
           <Route exact path="/explore" component={Explore} />
+          <Route exact path="/show/:id" component={ShowSpace} />
           <Route exact path="/add" component={Add} />
           <Route path="/" component={Index} />
         </Switch>

@@ -18,9 +18,9 @@ const Navbar = () => (
     <NavLink to="/" text="work{Space}" />
     <Search />
     <div>
-      <NavLink to="/explore" text="explore" />
       <NavLink to="/add" text="add" />
-      <NavLink to="/login" text="log in" />
+      <NavLink to="/explore" text="explore" />
+      <NavLink to="/about" text="about" />
     </div>
   </Nav>
 )

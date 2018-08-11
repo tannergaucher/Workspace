@@ -7,7 +7,13 @@ const workspaceSchema = new mongoose.Schema({
     type: String
   },
   rating: {
-    type: Number
+    type: String
+  },
+  location: {
+    type: String
+  },
+  image: {
+    type: String
   }
 })
 

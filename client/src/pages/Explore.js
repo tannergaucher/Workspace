@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import axios from 'axios'
+
+import { workspacesFetch } from '../actions'
 
 import Navbar from '../components/Navbar'
 import GoogleMap from '../components/GoogleMap'
@@ -20,18 +23,29 @@ const MapWrapper = styled.div`
 `
 
 class Explore extends React.Component {
+  componentDidMount() {
+    this.props.fetchData('/getWorkspaces')
+  }
+
   render() {
-    const { workspaces } = this.props
+    const { workspaces, hasErrored, isLoading } = this.props
+
+    // if (hasErrored) {
+    //   return <p>error loading workspaces</p>
+    // }
+
+    if (isLoading) {
+      return <p>loading workspaces</p>
+    }
+
     return (
       <div>
         <Navbar />
         <Container>
           <CardsWrapper>
-            <ul>
-              {Object.keys(workspaces).map(key => (
-                <SpaceCard key={key} details={workspaces[key]} />
-              ))}
-            </ul>
+            {Object.keys(workspaces).map(key => (
+              <SpaceCard key={key} details={workspaces[key]} />
+            ))}
           </CardsWrapper>
           <MapWrapper>
             <GoogleMap />
@@ -43,7 +57,20 @@ class Explore extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { workspaces: state.workspaces }
+  return {
+    workspaces: state.workspaces,
+    hasErrored: state.workspacesHasErrored,
+    isLoading: state.workspacesIsLoading
+  }
 }
 
-export default connect(mapStateToProps)(Explore)
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchData: url => dispatch(workspacesFetch(url))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Explore)

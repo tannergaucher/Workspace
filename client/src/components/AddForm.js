@@ -38,7 +38,7 @@ class AddForm extends React.Component {
         <Field name="name" label="Name" component={this.renderField} />
         <Field name="location" label="Location" component={this.renderField} />
         <Field name="rating" label="Rating" component={this.renderField} />
-        <Field name="picture" label="Picture" component={this.renderField} />
+        <Field name="image" label="Image" component={this.renderField} />
         <Button type="submit">Save</Button>
       </FormWrapper>
     )

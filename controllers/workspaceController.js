@@ -12,8 +12,9 @@ exports.addWorkspace = async (req, res) => {
 
 //@delete Workspace
 exports.deleteWorkspace = async (req, res) => {
-  const workspace = await Workspace.findOne({ id: req.params.id }).remove()
-  console.log('deleted item', item)
+  const workspace = await Workspace.findOne({ _id: req.params.id }).remove()
+  console.log('deleted item', workspace)
+  // res.send('deleted')
   res.end()
 }
 
@@ -22,7 +23,7 @@ exports.updateWorkspace = async (req, res) => {
   console.log('update workspace', req.params.id)
   console.log('req.body', req.body)
   const workspace = await Workspace.findOneAndUpdate(
-    { id: req.params.id },
+    { _id: req.params.id },
     req.body,
     {
       new: true,
@@ -35,8 +36,8 @@ exports.updateWorkspace = async (req, res) => {
 //@get Workspace
 exports.getWorkspace = async (req, res) => {
   console.log('getting workspace')
-  const workspace = await Workspace.findOne({ id: req.params.id })
-  res.send(item)
+  const workspace = await Workspace.findOne({ _id: req.params.id })
+  return res.json(workspace)
 }
 
 //@get Workspaces

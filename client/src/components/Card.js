@@ -6,19 +6,28 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 
 const CardWrapper = styled(Card)`
-  width: 300px;
+  && {
+    width: 300px;
+    height: 300px;
+    margin: 1.3em;
+    border-radius: 1.5px;
+  }
 `
 const Text = styled(CardContent)``
-const Image = styled.img``
+const Image = styled(CardMedia)`
+  && {
+    height: 150px;
+  }
+`
 
 const SpaceCard = ({ details }) => (
   <CardWrapper>
-    <Image src={details.image} />
-    <CardContent>
-      <Text component="h3">{details.name}</Text>
-      <Text component="h5">{details.location}</Text>
-      <Text component="h5">{details.rating}</Text>
-    </CardContent>
+    {/* <CardContent> */}
+    {/* <Text component="h3">{details.name}</Text> */}
+    <Image image={details.image} />
+    <Text component="h3">{details.name}</Text>
+    <Text component="h5">{details.rating}</Text>
+    {/* </CardContent> */}
   </CardWrapper>
 )
 

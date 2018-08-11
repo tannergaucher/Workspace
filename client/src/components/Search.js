@@ -6,7 +6,6 @@ import SearchIcon from '@material-ui/icons/Search'
 
 const SearchWrapper = styled.div``
 
-// Override MUI style targeting classname
 const SearchInput = styled(Input)`
   &.MuiInput-underline-5:after {
     border-bottom: 2px solid ${props => props.theme.accent};
@@ -16,16 +15,31 @@ const SearchInput = styled(Input)`
   }
 `
 
-const Search = () => (
-  <SearchWrapper>
-    <SearchInput
-      startAdornment={
-        <InputAdornment>
-          <SearchIcon />
-        </InputAdornment>
-      }
-    />
-  </SearchWrapper>
-)
+class Search extends React.Component {
+  state = {
+    query: ''
+  }
+
+  googlePlacesQuery = () => {
+    const request = {
+      query: this.state.query
+      // fields: ['photos', 'name', 'rating']
+    }
+  }
+
+  render() {
+    return (
+      <SearchWrapper>
+        <SearchInput
+          startAdornment={
+            <InputAdornment>
+              <SearchIcon />
+            </InputAdornment>
+          }
+        />
+      </SearchWrapper>
+    )
+  }
+}
 
 export default Search

@@ -1,64 +1,52 @@
 import axios from 'axios'
 
+export const FETCH_WORKSPACES = 'fetch_workspaces'
+export const FETCH_WORKSPACE = 'fetch_workspace'
+export const RECEIVE_WORKSPACES = 'receive_workspaces'
+export const RECEIVE_WORKSPACE = 'receive_workspaces'
 export const CREATE_WORKSPACE = 'create_workspace'
-export const WORKSPACES_FETCH_SUCCESS = 'workspaces_fetch_success'
-export const WORKSPACES_HAS_ERRORED = 'workspace_has_errored'
-export const WORKSPACES_IS_LOADING = 'workspace_is_loading'
+export const DELETE_WORKSPACE = 'delete_workspace'
 
-export function workspacesHasErrored(bool) {
+export function fetchWorkspaces() {
+  const request = axios.get(`/getWorkspaces`)
+
   return {
-    type: WORKSPACES_HAS_ERRORED,
-    hasErrored: bool
+    type: FETCH_WORKSPACES,
+    payload: request
   }
 }
 
-export function workspacesIsLoading(bool) {
-  return {
-    type: WORKSPACES_IS_LOADING,
-    isLoading: bool
-  }
-}
+export function fetchWorkspace(id) {
+  const request = axios.get(`/getWorkspace/${id}`)
 
-export function errorAfterFiveSeconds() {
-  return dispatch => {
-    setTimeout(() => {
-      // this func able to dispatch other action creators
-      dispatch(workspacesHasErrored(true))
-    }, 5000)
+  return {
+    type: FETCH_WORKSPACE,
+    payload: request
   }
 }
 
 export function createWorkspace(values, callback) {
-  return dispatch => {
-    axios
-      .post('/addWorkspace', values)
-      .then(() => callback())
-      .catch(error => console.log(error))
-  }
+  const request = axios.post('/addWorkspace', values).then(() => callback())
 
-  // return {
-  //   type: CREATE_WORKSPACE,
-  //   payload: workspace
-  // }
-}
-
-export function workspacesFetchSuccess(workspaces) {
   return {
-    type: WORKSPACES_FETCH_SUCCESS,
-    workspaces
+    type: CREATE_WORKSPACE,
+    payload: request
   }
 }
 
-export function workspacesFetch(url) {
-  return dispatch => {
-    dispatch(workspacesIsLoading(true))
+// export function createWorkspace(values, callback) {
+//   return dispatch => {
+//     dispatch({ type: CREATE_WORKSPACE, values })
+//     axios.post('/addWorkspace', values).then(response => {
+//       callback()
+//       dispatch({ type: RECEIVE_WORKSPACES }, response)
+//     })
+//   }
+// }
 
-    axios
-      .get('/getWorkspaces')
-      .then(response => {
-        dispatch(workspacesFetchSuccess(response.data))
-        dispatch(workspacesIsLoading(false))
-      })
-      .catch(error => dispatch(workspacesHasErrored(true)))
+export function deleteWorkspace(id, callback) {
+  return dispatch => {
+    dispatch({ type: DELETE_WORKSPACE, id })
+    axios.post(`/deleteWorkspace/${id}`).then(() => callback())
   }
 }

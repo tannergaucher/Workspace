@@ -14,7 +14,7 @@ exports.addWorkspace = async (req, res) => {
 exports.deleteWorkspace = async (req, res) => {
   const workspace = await Workspace.findOne({ _id: req.params.id }).remove()
   console.log('deleted item', workspace)
-  // res.send('deleted')
+  res.send('deleted')
   res.end()
 }
 
@@ -37,6 +37,7 @@ exports.updateWorkspace = async (req, res) => {
 exports.getWorkspace = async (req, res) => {
   console.log('getting workspace')
   const workspace = await Workspace.findOne({ _id: req.params.id })
+  console.log(workspace)
   return res.json(workspace)
 }
 

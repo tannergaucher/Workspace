@@ -3,11 +3,12 @@ import GoogleMapReact from 'google-map-react'
 import styled from 'styled-components'
 
 const MapContainer = styled.div`
-  height: calc(100vh - 65px);
-  flex-grow: 1;
+  height: calc(100vh - 64px);
 `
 
 class GoogleMap extends React.Component {
+  componentDidMount() {}
+
   render() {
     const center = {
       lat: 48.8,

@@ -9,6 +9,7 @@ const Header = styled.h1``
 const Index = () => (
   <Container>
     <Navbar />
+    <Header>About</Header>
   </Container>
 )
 

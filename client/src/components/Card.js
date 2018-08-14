@@ -3,7 +3,10 @@ import styled from 'styled-components'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
+
+//flex: 0 0 33%;
+// @media (max-width: 992px) { flex: 0 0 50%;}
+//@media (max-width: 700px) { flex: 0 0 100%;}
 
 const CardWrapper = styled(Card)`
   && {
@@ -22,12 +25,9 @@ const Image = styled(CardMedia)`
 
 const SpaceCard = ({ details }) => (
   <CardWrapper>
-    {/* <CardContent> */}
-    {/* <Text component="h3">{details.name}</Text> */}
     <Image image={details.image} />
     <Text component="h3">{details.name}</Text>
     <Text component="h5">{details.rating}</Text>
-    {/* </CardContent> */}
   </CardWrapper>
 )
 

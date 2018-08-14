@@ -1,31 +1,13 @@
-var map;
-var service;
-var infowindow;
-var map;
-var service;
-var infowindow;
+function getCoords(lng, lat) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(displayLocationInfo)
+  }
 
-function initMap() {
-  var mapCenter = new google.maps.LatLng(-33.8617374,151.2021291);
+  function displayLocationInfo(position) {
+    lng = position.coords.longitude
+    lat = position.coords.latitude
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: mapCenter,
-    zoom: 15
-  });
-
-  var request = {
-    query: 'Museum of Contemporary Art Australia',
-    fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],
-
-  service = new google.maps.places.PlacesService(map);
-  service.findPlaceFromQuery(request, callback);
-}
-
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      var place = results[i];
-      createMarker(results[i]);
-    }
+    console.log(`longitude: ${lng} | latitude: ${lat}`)
+    return lng, lat
   }
 }

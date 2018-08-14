@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import uuidv1 from 'uuid/v1'
 
 import TextField from './TextField'
 import Button from './Button'
-
 import { createWorkspace } from '../actions'
+
+import history from '../history'
+import { withRouter } from 'react-router-dom'
+
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -21,13 +23,15 @@ const FormTitle = styled.h3`
   margin-bottom: ${props => props.theme.margin};
 `
 
+const FormField = styled(TextField)``
+
 class AddForm extends React.Component {
   renderField = field => (
-    <TextField {...field.input} placeholder={field.label} />
+    <FormField {...field.input} placeholder={field.label} />
   )
 
   onSubmit = values => {
-    this.props.createWorkspace(values, () => this.props.history.push('/'))
+    this.props.createWorkspace(values, () => history.push('/'))
   }
 
   render() {
@@ -66,8 +70,10 @@ export default reduxForm({
   validate,
   form: 'AddWorkspaceForm'
 })(
-  connect(
-    null,
-    { createWorkspace }
-  )(AddForm)
+  withRouter(
+    connect(
+      null,
+      { createWorkspace }
+    )(AddForm)
+  )
 )

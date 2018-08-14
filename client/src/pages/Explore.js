@@ -1,50 +1,54 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import axios from 'axios'
+import StyledLink from '../components/StyledLink'
 
-import { workspacesFetch } from '../actions'
-
+import { fetchWorkspaces } from '../actions'
 import Navbar from '../components/Navbar'
 import GoogleMap from '../components/GoogleMap'
 import SpaceCard from '../components/Card'
 
 const Container = styled.div`
   display: flex;
-  background: papayawhip;
+  background: ${props => props.theme.secondary};
 `
 const CardsWrapper = styled.div`
-  flex: 2;
+  flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: ${props => props.theme.margin};
 `
 const MapWrapper = styled.div`
-  flex: 1;
+  flex: 0 0 400px;
+  height: calc(100vh - 64);
+  & .kRvYkj {
+    height: calc(100vh - 64px);
+    position: sticky !important;
+    top: 64px !important;
+  }
 `
 
 class Explore extends React.Component {
   componentDidMount() {
-    this.props.fetchData('/getWorkspaces')
+    this.props.fetchWorkspaces()
   }
 
   render() {
-    const { workspaces, hasErrored, isLoading } = this.props
+    const { workspaces } = this.props
 
-    // if (hasErrored) {
-    //   return <p>error loading workspaces</p>
-    // }
-
-    if (isLoading) {
-      return <p>loading workspaces</p>
+    if (!workspaces) {
+      return <p>loading</p>
     }
-
     return (
       <div>
         <Navbar />
         <Container>
           <CardsWrapper>
             {Object.keys(workspaces).map(key => (
-              <SpaceCard key={key} details={workspaces[key]} />
+              <StyledLink key={key} to={`/getWorkspace/${workspaces[key]._id}`}>
+                <SpaceCard details={workspaces[key]} />
+              </StyledLink>
             ))}
           </CardsWrapper>
           <MapWrapper>
@@ -57,20 +61,10 @@ class Explore extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    workspaces: state.workspaces,
-    hasErrored: state.workspacesHasErrored,
-    isLoading: state.workspacesIsLoading
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchData: url => dispatch(workspacesFetch(url))
-  }
+  return { workspaces: state.workspaces }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchWorkspaces }
 )(Explore)

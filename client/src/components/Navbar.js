@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import NavLink from './NavLink'
+import { Link } from 'react-router-dom'
+
 import Search from './Search'
 
 const Nav = styled.div`
@@ -8,19 +9,33 @@ const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  background: ${props => props.theme.primary};
-  border-bottom: 1px solid ${props => props.theme.secondary};
+  background: linear-gradient(162deg, #fd267d, #ff7854);
   padding: 1em;
+  position: sticky !important;
+  top: 0 !important;
 `
+
+const NavLink = styled(Link)`
+  color: ${props => props.theme.secondary};
+  font-size: ${props => props.theme.typography.primaryTextSize};
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: ${props => props.theme.margin}
+  &:hover {
+    opacity: .8;
+  }
+`
+
+const title = 'work{Space}'
 
 const Navbar = () => (
   <Nav>
-    <NavLink to="/" text="work{Space}" />
+    <NavLink to="/">{title}</NavLink>
     <Search />
     <div>
-      <NavLink to="/add" text="add" />
-      <NavLink to="/explore" text="explore" />
-      <NavLink to="/about" text="about" />
+      <NavLink to="/add">Add</NavLink>
+      <NavLink to="/explore">Explore</NavLink>
+      <NavLink to="/about">About</NavLink>
     </div>
   </Nav>
 )

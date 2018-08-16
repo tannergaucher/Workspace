@@ -1,24 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import Input from '@material-ui/core/Input'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import SearchIcon from '@material-ui/icons/Search'
 
-const SearchWrapper = styled.div``
+import Popper from '@material-ui/core/Popper'
+import Fade from '@material-ui/core/Fade'
+import Paper from '@material-ui/core/Paper'
+import Input from '@material-ui/core/Input'
+import MenuItem from '@material-ui/core/MenuItem'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+
 const SearchInput = styled(Input)`
-  &.MuiInput-underline-5:after {
-    border-bottom: 2px solid white;
-  }
   && {
-    font-family: Montserrat;
+    font-family: ${props => props.theme.typography.primaryFont};
+  }
+`
+
+const SearchList = styled(Paper)``
+
+const SearchListItem = styled(MenuItem)`
+  && {
+    font-family: ${props => props.theme.typography.primaryFont};
   }
 `
 
 class Search extends React.Component {
   state = {
     query: '',
-    predictions: ''
+    predictions: '',
+    anchorEl: null,
+    open: false
   }
 
   queryGooglePlaces() {
@@ -28,9 +38,10 @@ class Search extends React.Component {
           this.state.query
         }`
       )
-      .then(response =>
+      .then(response => {
+        console.log(response.data.predictions)
         this.setState({ predictions: response.data.predictions })
-      )
+      })
       .catch(error => console.log(error))
   }
 
@@ -39,22 +50,48 @@ class Search extends React.Component {
     this.queryGooglePlaces()
   }
 
-  componentDidMount() {}
+  handleClick = e => {
+    const { currentTarget } = e
+    this.setState(state => ({
+      anchorEl: currentTarget,
+      open: !state.open
+    }))
+  }
+
+  handleClickAway = () => {
+    this.setState({ open: false, predictions: '' })
+  }
+
+  logCoordsOnClick = () => {}
 
   render() {
+    const { predictions, query, anchorEl, open } = this.state
     return (
-      <SearchWrapper>
+      <div>
         <SearchInput
           value={this.state.query}
           name="query"
           onChange={this.handleChange}
-          startAdornment={
-            <InputAdornment>
-              <SearchIcon />
-            </InputAdornment>
-          }
+          onClick={this.handleClick}
         />
-      </SearchWrapper>
+        <ClickAwayListener onClickAway={this.handleClickAway}>
+          <div>
+            <Popper open={open} anchorEl={anchorEl} transition>
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                  <SearchList>
+                    {Object.keys(predictions).map(prediction => (
+                      <SearchListItem key={predictions[prediction].id}>
+                        {predictions[prediction].description}
+                      </SearchListItem>
+                    ))}
+                  </SearchList>
+                </Fade>
+              )}
+            </Popper>
+          </div>
+        </ClickAwayListener>
+      </div>
     )
   }
 }

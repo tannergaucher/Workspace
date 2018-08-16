@@ -35,7 +35,7 @@ const theme = {
     primaryFont: 'Montserrat',
     mainTextSize: '20px',
     secondaryTextSize: '16px',
-    anchorTextColor: 'palevioletred'
+    anchorTextColor: 'black'
   }
 }
 

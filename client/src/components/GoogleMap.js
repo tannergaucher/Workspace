@@ -7,12 +7,17 @@ const MapContainer = styled.div`
 `
 
 class GoogleMap extends React.Component {
+  state = {
+    lat: 48.8,
+    lng: 2.35
+  }
+
   componentDidMount() {}
 
   render() {
     const center = {
-      lat: 48.8,
-      lng: 2.35
+      lat: this.state.lat,
+      lng: this.state.lng
     }
 
     return (

@@ -1,5 +1,2 @@
-# MERN-boilerplate
+Find fast internet. Mongo, express, react redux node app. 
 
-**Mongo Express React Node** app boilerplate
-
-Basic CRUD functionality for item, price, rating.
